@@ -33,7 +33,7 @@ jobs:
         # Authenticate against Google Cloud
         gcloud auth configure-docker europe-north1-docker.pkg.dev
         # Build Docker image
-        docker build -t europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/lab01:latest .
+        docker build -t europe-north1-docker.pkg.dev/${{ GOOGLE_PROJECT }}/lab01:latest .
         # Push Docker image to Google Artifact repository
-        docker push europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/lab01:latest
+        docker push europe-north1-docker.pkg.dev/${{ GOOGLE_PROJECT }}/lab01:latest
 
