@@ -1,0 +1,39 @@
+name: Deploy Lab01
+
+# trigger on pushes to main branch
+on:
+  push:
+    branches:
+    - "main"
+
+# define jobs to execute
+jobs:
+  deploy:
+    # ubuntu vm has docker pre-installed
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      # use pre-defined action to checkout code
+      uses: actions/checkout@v2
+
+    - name: Install gcloud cli
+      # use pre-defined action to install gloud cli
+      uses: google-github-actions/setup-gcloud@v0
+      # Configure gcloud cli with secrets
+      with:
+        project_id: ${{ secrets.GOOGLE_PROJECT }}
+        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        export_default_credentials: true
+
+    - name: Build and push Docker image
+      env:
+        GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+      run: |  # pipe lets you define multi-line commands
+        # Authenticate against Google Cloud
+        gcloud auth configure-docker europe-north1-docker.pkg.dev
+        # Build Docker image
+        docker build -t europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/lab01:latest .
+        # Push Docker image to Google Artifact repository
+        docker push europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/lab01:latest
+
