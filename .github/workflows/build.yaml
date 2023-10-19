@@ -15,7 +15,7 @@ jobs:
 
     - name: Checkout code
       # use pre-defined action to checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Auth GCP
       uses: "google-github-actions/auth@v1"
