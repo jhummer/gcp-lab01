@@ -17,14 +17,19 @@ jobs:
       # use pre-defined action to checkout code
       uses: actions/checkout@v2
 
+    - name: Auth GCP
+      uses: "google-github-actions/auth@v1"
+      with:
+        credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
     - name: Install gcloud cli
       # use pre-defined action to install gloud cli
-      uses: google-github-actions/setup-gcloud@v0
-      # Configure gcloud cli with secrets
-      with:
-        project_id: ${{ secrets.GOOGLE_PROJECT }}
-        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        export_default_credentials: true
+      uses: google-github-actions/setup-gcloud@v1
+      #  Configure gcloud cli with secrets
+      # with:
+      #   project_id: ${{ secrets.GOOGLE_PROJECT }}
+      #   service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      #   export_default_credentials: true
 
     - name: Build and push Docker image
       env:
