@@ -41,13 +41,13 @@ jobs:
         gcloud auth configure-docker europe-north1-docker.pkg.dev
         # Build Docker image
         # OLD: docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest .
-        docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA .
+        docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest .
         # Push Docker image to Google Artifact repository
         # OLD: docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
-        docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA
+        docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         # Deploy to Cloud Run
-        gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA --platform managed --region $GCP_REGION
-    #- name: Deploy App to Cloud Run
-    #  run: gcloud run deploy $GCP_PROJECT_ID --image gcr.io/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA --platform managed --region $GCP_REGION
+        # gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
+    - name: Deploy App to Cloud Run
+        gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
         
 
