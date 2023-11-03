@@ -1,10 +1,14 @@
-name: Deploy Lab01
+name: Deploy Lab01 to Cloud Run
 
 # trigger on pushes to main branch
 on:
   push:
     branches:
     - "main"
+
+env: 
+  GCP_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT }}
+  GCP_REGION: europe-north1
 
 # define jobs to execute
 jobs:
@@ -32,13 +36,17 @@ jobs:
       #   export_default_credentials: true
 
     - name: Build and push Docker image
-      env:
-        GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       run: |  # pipe lets you define multi-line commands
         # Authenticate against Google Cloud
         gcloud auth configure-docker europe-north1-docker.pkg.dev
         # Build Docker image
-        docker build -t europe-north1-docker.pkg.dev/$GOOGLE_PROJECT/gcp-lab01/lab01:latest .
+        # OLD: docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest .
+        docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA .
         # Push Docker image to Google Artifact repository
-        docker push europe-north1-docker.pkg.dev/$GOOGLE_PROJECT/gcp-lab01/lab01:latest
+        # OLD: docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
+        docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA
+    
+    - name: Deploy App to Cloud Run
+      run: gcloud run deploy $GCP_PROJECT_ID --image gcr.io/$GCP_PROJECT_ID/$GCP_PROJECT_ID:$GITHUB_SHA --platform managed --region $GCP_REGION
+        
 
