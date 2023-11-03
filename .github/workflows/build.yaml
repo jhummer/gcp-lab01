@@ -47,7 +47,10 @@ jobs:
         docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         # Deploy to Cloud Run
         # gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
+    
     - name: Deploy App to Cloud Run
-      run: gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
+      run: |
+        gcloud auth configure-docker europe-north1-docker.pkg.dev
+        gcloud run deploy $GCP_PROJECT_ID --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
         
 
