@@ -46,5 +46,5 @@ jobs:
         # OLD: docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         # Deploy to Cloud Run
-        gcloud run deploy lab01 --image gcr.io/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
+        gcloud run deploy lab01 --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
 
