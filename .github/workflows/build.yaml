@@ -40,10 +40,8 @@ jobs:
         # Authenticate against Google Cloud
         gcloud auth configure-docker europe-north1-docker.pkg.dev
         # Build Docker image
-        # OLD: docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest .
         docker build -t europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest .
         # Push Docker image to Google Artifact repository
-        # OLD: docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         docker push europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest
         # Deploy to Cloud Run
         gcloud run deploy lab01 --image europe-north1-docker.pkg.dev/$GCP_PROJECT_ID/gcp-lab01/lab01:latest --platform managed --region $GCP_REGION
